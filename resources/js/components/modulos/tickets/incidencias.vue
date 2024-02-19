@@ -45,7 +45,7 @@
                         ></TicketIncidencias>
                     </div>
                     <div class="col-md-7">
-                        <div class="card card-dark bg-dark mb-0">
+                        <div class="card card-dark bg-chat mb-0">
                             <!-- <div class="card-header" style="padding: 5px 20px; border-bottom:solid 2px var(--principal)">
                                 <div class="mailbox-controls">
                                     <button

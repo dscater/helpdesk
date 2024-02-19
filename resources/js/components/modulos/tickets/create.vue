@@ -319,14 +319,30 @@ export default {
                     this.enviando = false;
                     this.limpiarTicket();
                     setTimeout(() => {
-                        this.$router.push({ name: "tickets.index" });
+                        this.$router.push({
+                            name: "tickets.incidencias",
+                            params: {
+                                id: response.data.ticket.id,
+                            },
+                        });
                     }, 1000);
                 })
                 .catch((error) => {
                     this.enviando = false;
                     if (error.response) {
                         if (error.response.status === 422) {
-                            this.errors = error.response.data.errors;
+                            if (error.response.data.errors) {
+                                this.errors = error.response.data.errors;
+                            }
+                            if (error.response.data.no_coincidencias) {
+                                Swal.fire({
+                                    icon: "info",
+                                    title: error.response.data.message,
+                                    showConfirmButton: true,
+                                    confirmButtonColor: "#05568e",
+                                    confirmButtonText: "Aceptar",
+                                });
+                            }
                         }
                     }
                 });

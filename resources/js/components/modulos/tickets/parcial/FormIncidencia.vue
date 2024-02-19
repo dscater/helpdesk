@@ -1,6 +1,6 @@
 <template>
     <div class="col-md-12 ml-auto mr-auto mt-0">
-        <div class="card card-primary card-outline bg-dark">
+        <div class="card card-primary card-outline bg-chat">
             <div class="card-header">
                 <h3 class="card-title" v-html="tituloForm"></h3>
             </div>

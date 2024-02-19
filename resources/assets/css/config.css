@@ -4,6 +4,11 @@
     --correcto: #d2e7c9;
 }
 
+.bg-chat {
+    background-color: rgb(17, 186, 23);
+    color: white;
+}
+
 .login-page .login-box .card .card-header img {
     width: 100%;
 }
@@ -23,7 +28,7 @@
     overflow: auto;
 }
 
-.el-avatar>img {
+.el-avatar > img {
     width: 100%;
 }
 
