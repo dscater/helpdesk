@@ -83,16 +83,18 @@ class SolucionTicketController extends Controller
             }
 
             foreach ($personals as $p) {
-                Mail::send('mail.mail', $data, function ($msj) use ($empresa, $ticket, $p, $files) {
-                    $email_empresa = \mb_strtolower($empresa->correo ? $empresa->correo : "correosyseventos@gmail.com");
-                    $msj->from($email_empresa);
-                    $msj->subject($ticket->asunto);
-                    $correo_cliente = \mb_strtolower($p->user->informacion_usuario->correo);
-                    $msj->to($correo_cliente, $p->full_name);
-                    foreach ($files as $file) {
-                        $msj->attach($file);
-                    }
-                });
+                if ($p->user->informacion_usuario->correo && $p->user->informacion_usuario->correo != '') {
+                    Mail::send('mail.mail', $data, function ($msj) use ($empresa, $ticket, $p, $files) {
+                        $email_empresa = \mb_strtolower($empresa->correo ? $empresa->correo : "correosyseventos@gmail.com");
+                        $msj->from($email_empresa);
+                        $msj->subject($ticket->asunto);
+                        $correo_cliente = \mb_strtolower($p->user->informacion_usuario->correo);
+                        $msj->to($correo_cliente, $p->full_name);
+                        foreach ($files as $file) {
+                            $msj->attach($file);
+                        }
+                    });
+                }
             }
         }
 

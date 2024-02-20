@@ -208,19 +208,21 @@ class TicketController extends Controller
                     $solucion_ticket = SolucionTicket::create(array_map('mb_strtoupper', $datos));
                     // ENVIO MAIL
                     $empresa = Configuracion::first();
-                    $data = [
-                        'asunto' => $solucion_ticket->asunto,
-                        'descripcion' => $solucion_ticket->descripcion,
-                        'usuario' => $solucion_ticket->user->full_name
-                    ];
+                    if ($solucion_ticket->user->informacion_usuario->correo && $solucion_ticket->user->informacion_usuario->correo != '') {
+                        $data = [
+                            'asunto' => $solucion_ticket->asunto,
+                            'descripcion' => $solucion_ticket->descripcion,
+                            'usuario' => $solucion_ticket->user->full_name
+                        ];
 
-                    Mail::send('mail.mail', $data, function ($msj) use ($empresa, $ticket) {
-                        $email_empresa = \mb_strtolower($empresa->correo ? $empresa->correo : "correosyseventos@gmail.com");
-                        $msj->from($email_empresa);
-                        $msj->subject($ticket->asunto);
-                        $correo_cliente = \mb_strtolower($ticket->user->informacion_usuario->correo);
-                        $msj->to($correo_cliente, $ticket->user->full_name);
-                    });
+                        Mail::send('mail.mail', $data, function ($msj) use ($empresa, $ticket) {
+                            $email_empresa = \mb_strtolower($empresa->correo ? $empresa->correo : "correosyseventos@gmail.com");
+                            $msj->from($email_empresa);
+                            $msj->subject($ticket->asunto);
+                            $correo_cliente = \mb_strtolower($ticket->user->informacion_usuario->correo);
+                            $msj->to($correo_cliente, $ticket->user->full_name);
+                        });
+                    }
                 };
             }
             DB::commit();
